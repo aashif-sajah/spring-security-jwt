@@ -3,12 +3,10 @@ package com.aashif.spring_security_jwt.controller;
 import com.aashif.spring_security_jwt.model.Users;
 import com.aashif.spring_security_jwt.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin
 public class UserController
 {
     @Autowired
@@ -18,6 +16,7 @@ public class UserController
     @PostMapping("/registerNewUser")
     public Users registerUser(@RequestBody Users users)
     {
+
         return userService.registerNewUser(users);
     }
 
