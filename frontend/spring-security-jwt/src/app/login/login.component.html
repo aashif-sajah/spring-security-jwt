@@ -1,1 +1,43 @@
-<p>login works!</p>
+<!-- login.component.html -->
+
+<div class="container content w-100 h-100">
+  <div class="row justify-content-center">
+    <div class="col-md-4 mt-4">
+      <div class="card shadow-sm">
+        <div class="card-body ">
+          <h4 class="text-center mb-4">Login</h4>
+          <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+            <!-- Username -->
+            <div class="form-group mb-3">
+              <label for="userName">Username</label>
+              <input
+                type="text"
+                class="form-control"
+                id="userName"
+                [(ngModel)]="userName"
+                name="userName"
+                required
+              />
+            </div>
+
+            <!-- Password -->
+            <div class="form-group mb-3">
+              <label for="userPassword">Password</label>
+              <input
+                type="password"
+                class="form-control"
+                id="userPassword"
+                [(ngModel)]="userPassword"
+                name="userPassword"
+                required
+              />
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block" [disabled]="!loginForm.form.valid">Login</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
