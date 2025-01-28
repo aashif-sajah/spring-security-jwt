@@ -1,3 +1,6 @@
-p{
-  margin-bottom: 90%;
+.container{
+  background-color:#1a1a1a;
+  height:90vh;
+  color:white;
+  text-align:center;
 }
