@@ -1,0 +1,286 @@
+<div class="container-fluid bg-dark text-white min-vh-100 py-4">
+  <!-- Small Header -->
+  <div class="card my-card">
+
+    <header class="text-center mb-5">
+      <h1 class="display-5" id="erica-heading">Welcome to Security API Platform</h1>
+      <p class="lead">Streamline Your Development with Secure and Scalable APIs</p>
+    </header>
+
+    <!-- The Founder -->
+    <section class="mb-5 text-center">
+      <h2 class="mb-4">Who Am I?</h2>
+      <p>
+        My name is Aashif, a software engineer and aspiring entrepreneur with a passion for creating
+        secure and efficient systems. I specialize in Java, Spring Boot, Angular, and API development.
+        This platform is a result of my dedication to solving real-world problems with scalable and secure solutions.
+      </p>
+    </section>
+
+    <!-- The Reason -->
+    <section class="mb-5 text-center">
+      <h2 class="mb-4">Why I Built This API</h2>
+      <p>
+        The primary goal of this API is to provide a practical and easy-to-use solution for developers seeking robust
+        authentication and role-based access control mechanisms. I wanted to create an example that not only
+        demonstrates
+        Spring Security's capabilities but also helps other developers understand how to build scalable, secure systems.
+      </p>
+      <p>
+        By using this API, you can manage users, assign roles, and secure endpoints dynamically with JWT authentication.
+        This project serves as a learning resource for developers and a base to build upon for real-world applications.
+      </p>
+    </section>
+
+    <!-- How to Use -->
+    <section class="mb-5">
+      <h2 class="text-center mb-4">How to Use</h2>
+      <ol class="mx-auto text-left p-3">
+        <li>Clone the repository from GitHub.</li>
+        <li>Set up a MySQL database and configure the application properties file.</li>
+        <li>Run the application to expose the API endpoints.</li>
+        <li>Use a tool like Postman or integrate these APIs into your front-end application.</li>
+        <li>Authenticate using the /authenticate endpoint to receive a JWT token.</li>
+        <li>Send the JWT token in the Authorization header for secured endpoints.</li>
+      </ol>
+    </section>
+
+    <!-- API Endpoints -->
+    <section class="mb-5">
+      <h2 class="text-center mb-4">API Endpoints</h2>
+      <div class="row justify-content-center">
+        <div class="col-md-4 mb-4">
+          <div class="p-3 border rounded d-flex flex-column h-100 custom-card">
+            <h5>POST /authenticate</h5>
+            <p>Authenticate a user and receive a JWT token. This token is essential for accessing secure endpoints.</p>
+            <p>Body: userName and userPassword</p>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="p-3 border rounded d-flex flex-column h-100 custom-card">
+            <h5>POST /createNewRole</h5>
+            <p>Create a new role in the system. Only authorized users (admins) can access this endpoint.</p>
+            <p>Body: roleName</p>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="p-3 border rounded d-flex flex-column h-100 custom-card">
+            <h5>POST /registerNewUser</h5>
+            <p>Register a new user in the system. This endpoint creates a user with default permissions.</p>
+            <p>Body: userName and userPassword</p>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="p-3 border rounded d-flex flex-column h-100 custom-card">
+            <h5>GET /forAdmin</h5>
+            <p>A secure endpoint accessible only to users with the admin role. Returns a message if access is granted.
+            </p>
+            <p>Authorization: Bearer JWT</p>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="p-3 border rounded d-flex flex-column h-100 custom-card">
+            <h5>GET /forUser</h5>
+            <p>A secure endpoint accessible only to users with the user role. Returns a message if access is granted.
+            </p>
+            <p>Authorization: Bearer JWT</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- JWT Token Explanation -->
+    <section class="mb-5">
+      <h2 class="text-center mb-4">Understanding JWT Tokens</h2>
+      <p class="text-center mb-4">
+        JSON Web Tokens (JWT) are a secure way to represent user information in a compact, self-contained format. Here's
+      </p>
+
+      <!-- Step 1: Authenticate -->
+      <div class="row justify-content-center mb-4">
+        <div class="col-md-3">
+          <div class="d-flex flex-column align-items-center">
+            <div class="badge bg-primary text-white py-2 px-3 mb-3">Step 1: Authenticate</div>
+            <p class="text-left">Users authenticate using their credentials at <code>/authenticate</code>. A JWT token
+              is returned upon successful authentication.</p>
+          </div>
+        </div>
+
+        <!-- Step 2: Token Content -->
+        <div class="col-md-3">
+          <div class="d-flex flex-column align-items-center">
+            <div class="badge bg-success text-white py-2 px-3 mb-3">Step 2: Token Content</div>
+            <p class="text-left">The token contains user details and permissions, signed using a secret key to ensure
+              authenticity.</p>
+          </div>
+        </div>
+
+        <!-- Step 3: Send Token -->
+        <div class="col-md-3">
+          <div class="d-flex flex-column align-items-center">
+            <div class="badge bg-warning text-white py-2 px-3 mb-3">Step 3: Send Token</div>
+            <p class="text-left">For subsequent requests, the token is sent in the <code>Authorization</code> header
+              as <code>Bearer JWT</code>.</p>
+          </div>
+        </div>
+
+        <!-- Step 4: Token Verification -->
+        <div class="col-md-3">
+          <div class="d-flex flex-column align-items-center">
+            <div class="badge bg-danger text-white py-2 px-3 mb-3">Step 4: Token Verification</div>
+            <p class="text-left">The server verifies the token before granting access to secured resources, ensuring
+              the user has the appropriate permissions.</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="text-center mt-4">
+        JWT tokens provide a lightweight and secure mechanism for transmitting user information between the client and
+        the server.
+        They help with ensuring data integrity and can be used to securely authenticate and authorize users for
+        accessing restricted resources.
+      </p>
+    </section>
+
+
+    <!-- Contributing -->
+    <!-- <section>
+      <h2 class="text-center mb-4">How to Contribute</h2>
+      <p class="text-center">
+        Contributions are welcome! Whether you want to report a bug, suggest new features, or enhance the code, feel
+        free to fork the repository and create a pull request. Let's build a better system together.
+      </p>
+    </section> -->
+
+    <div class="row justify-content-center mb-4">
+      <!-- Step 1: Fork the Repository -->
+      <div class="row mb-3">
+        <div class="col-12">
+          <div class="p-4 border rounded shadow-sm">
+            <h4 class="text-center mb-3">Step 1: Fork the Repository</h4>
+            <p>Start by forking the repository to your GitHub account. This allows you to make changes without affecting
+              the main project.</p>
+            <!-- <img src="https://via.placeholder.com/150" alt="Fork Repo" class="img-fluid mx-auto d-block mb-3"> -->
+            <a href="https://github.com/aashif-sajah/spring-security-jwt" class="btn btn-primary btn-block">Fork Now</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2: Create a Feature Branch -->
+      <div class="row mb-3">
+        <div class="col-12">
+          <div class="p-4 border rounded shadow-sm">
+            <h4 class="text-center mb-3">Step 2: Create a Feature Branch</h4>
+            <p>After forking, create a feature branch for your changes. This ensures that your modifications don't
+              interfere with the main project.</p>
+            <!-- <img src="https://via.placeholder.com/150" alt="Create Branch" class="img-fluid mx-auto d-block mb-3"> -->
+            <a href="https://github.com/aashif-sajah/spring-security-jwt" class="btn btn-success btn-block">Create
+              Branch</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3: Make Your Changes -->
+      <div class="row mb-3">
+        <div class="col-12">
+          <div class="p-4 border rounded shadow-sm">
+            <h4 class="text-center mb-3">Step 3: Make Your Changes</h4>
+            <p>Modify the code to address bugs, add features, or improve the project. Be sure to write clear commit
+              messages describing your changes.</p>
+            <!-- <img src="https://via.placeholder.com/150" alt="Make Changes" class="img-fluid mx-auto d-block mb-3"> -->
+            <a href="https://github.com/aashif-sajah/spring-security-jwt" class="btn btn-warning btn-block">Start
+              Coding</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 4: Open a Pull Request -->
+      <div class="row mb-3">
+        <div class="col-12">
+          <div class="p-4 border rounded shadow-sm">
+            <h4 class="text-center mb-3">Step 4: Open a Pull Request</h4>
+            <p>Once you're happy with your changes, open a pull request. This will let the project maintainers review
+              your code and merge it into the main repository.</p>
+            <!-- <img src="https://via.placeholder.com/150" alt="Open Pull Request" class="img-fluid mx-auto d-block mb-3"> -->
+            <a href="https://github.com/aashif-sajah/spring-security-jwt" class="btn btn-danger btn-block">Open Pull
+              Request</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contributing Section -->
+    <section class="my-5">
+      <h2 class="text-center mb-4">How to Contribute</h2>
+      <p class="text-center mb-4">
+        Contributions are what make the open-source community such an amazing place to learn, inspire, and create.
+        We welcome you to fork the repository and submit improvements, bug fixes, or new features. Here’s a detailed
+        guide on how you can contribute to the project.
+      </p>
+
+      <!-- Contributing Section -->
+      <!-- Contributing Section -->
+      <!--  -->
+      <!-- Contributing Section -->
+      <section class="my-5">
+        <h2 class="text-center mb-4">How to Contribute</h2>
+        <p class="text-center mb-4">
+          Contributions are what make the open-source community such an amazing place to learn, inspire, and create.
+          We welcome you to fork the repository and submit improvements, bug fixes, or new features. Here’s a detailed
+          guide on how you can contribute to the project.
+        </p>
+
+        <!-- Contributor Guidelines List -->
+        <div class="row justify-content-center custom-row">
+          <div class="col-md-8">
+            <div class="list-group list-group-flush">
+
+              <div class="list-group-item py-4 bg-transparent border-1 mt-4" id="repo">
+                <h5 class="mb-3">Step 1: Fork the Repository</h5>
+                <p>Start by forking the repository to your GitHub account. This creates a personal copy of the project
+                  where you can freely make changes without affecting the main project.</p>
+                <a href="https://github.com/aashif-sajah/spring-security-jwt"
+                  class="btn btn-primary d-block mx-auto">Fork Now</a>
+              </div>
+
+              <div class="list-group-item py-4 bg-transparent border-1 mt-4 " id="repo">
+                <h5 class="mb-3">Step 2: Create a Feature Branch</h5>
+                <p>After forking, create a new feature branch. This will allow you to make changes without affecting the
+                  main codebase. It’s best practice to keep your changes isolated.</p>
+                <a href="https://github.com/aashif-sajah/spring-security-jwt"
+                  class="btn btn-success d-block mx-auto">Create Branch</a>
+              </div>
+
+              <div class="list-group-item py-4 bg-transparent border-1 mt-4" id="repo">
+                <h5 class="mb-3">Step 3: Make Your Changes</h5>
+                <p>Now, you can start editing the project! Fix bugs, add new features, or improve existing ones. Don’t
+                  forget to write clear commit messages that explain the changes you’ve made.</p>
+                <a href="https://github.com/aashif-sajah/spring-security-jwt"
+                  class="btn btn-warning d-block mx-auto">Start Coding</a>
+              </div>
+
+              <div class="list-group-item py-4 bg-transparent border-1 mt-4" id="repo">
+                <h5 class="mb-3">Step 4: Open a Pull Request</h5>
+                <p>Once you’re satisfied with your changes, it’s time to open a pull request. This allows the project
+                  maintainers to review and merge your changes into the main project.</p>
+                <a href="https://github.com/aashif-sajah/spring-security-jwt"
+                  class="btn btn-danger d-block mx-auto">Open Pull Request</a>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Final Section -->
+        <div class="text-center mt-5">
+          <p class="lead">
+            We appreciate your contributions to the project! Feel free to ask questions, provide feedback, or suggest
+            new ideas. Let’s work together to make this project even better!
+          </p>
+        </div>
+      </section>
+
+    </section>
+
+  </div>
+</div>
