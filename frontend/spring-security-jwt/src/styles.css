@@ -4,4 +4,9 @@ body {
   color: white;
   margin: 0;
   font-family: Arial, sans-serif;
+  overflow: scroll;
+}
+
+body::-webkit-scrollbar {
+  display: none;
 }
