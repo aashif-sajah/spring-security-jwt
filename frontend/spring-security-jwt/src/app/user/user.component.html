@@ -1,0 +1,53 @@
+<!-- user.component.html -->
+<div class="container-fluid bg-dark text-white vh-50 p-4">
+  <h1 class="text-center mb-4">User Dashboard</h1>
+  <p class="text-center">Welcome to your user dashboard. Here you can manage your profile, view your orders, and contact support.</p>
+  <div class="row card-custom">
+    <div class="col-md-4">
+      <div class="card bg-secondary text-white p-3 mb-4">
+        <h5 class="card-title">Profile</h5>
+        <p class="card-text">Manage your personal information and settings.</p>
+        <button class="btn btn-primary">Edit Profile</button>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card bg-secondary text-white p-3 mb-4">
+        <h5 class="card-title">Orders</h5>
+        <p class="card-text">View and track your orders.</p>
+        <button class="btn btn-primary">View Orders</button>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card bg-secondary text-white p-3 mb-4">
+        <h5 class="card-title">Support</h5>
+        <p class="card-text">Contact our support team for assistance.</p>
+        <button class="btn btn-primary">Get Support</button>
+      </div>
+    </div>
+  </div>
+  <h2>User Panel</h2>
+
+<div class="button-group">
+  <button
+    (click)="getAdminData()"
+    [disabled]="loading || !authService.hasRole('ADMIN')"
+  >
+    <span *ngIf="loading && currentAction === 'admin'">⏳</span>
+    Get Admin Data
+  </button>
+
+  <button
+    (click)="getUserData()"
+    [disabled]="loading || !authService.hasRole('USER')"
+  >
+    <span *ngIf="loading && currentAction === 'user'">⏳</span>
+    Get User Data
+  </button>
+</div>
+
+<div class="message-container">
+  <div *ngIf="message" [class]="messageType">
+    {{ message }}
+  </div>
+</div>
+</div>
