@@ -30,4 +30,8 @@ export class HeaderComponent {
   login(): void {
     this.router.navigate(['/login']);
   }
+
+  hasRole(role: string): boolean {
+    return this.authService.hasRole(role);
+  }
 }

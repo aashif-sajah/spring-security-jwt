@@ -31,4 +31,29 @@
       </div>
     </div>
   </div>
+
+  <h2>Admin Panel</h2>
+
+<div class="button-group">
+  <button
+    (click)="getAdminData()"
+    class="btn btn-primary m-2"
+  >
+    <span *ngIf="loading && currentAction === 'admin'">⏳</span>
+    Get Admin Data
+  </button>
+
+  <button
+    (click)="getUserData()" class="btn btn-primary m-2"
+  >
+    <span *ngIf="loading && currentAction === 'user'">⏳</span>
+    Get User Data
+  </button>
+</div>
+
+<div class="message-container">
+  <div *ngIf="message" [class]="messageType">
+    {{ message }}
+  </div>
+</div>
 </div>

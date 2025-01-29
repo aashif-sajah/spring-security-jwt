@@ -4,9 +4,10 @@ import { UserComponent } from './user/user.component';
 import { LoginComponent } from './login/login.component';
 import { AdminComponent } from './admin/admin.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
+import { authGuard } from './authService/auth.guard';
 
 export const routes: Routes = [
-  { path: 'home', component: HomeComponent },
+  { path: 'home', component: HomeComponent, canActivate: [authGuard] },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'user', component: UserComponent },
   { path: 'admin', component: AdminComponent },

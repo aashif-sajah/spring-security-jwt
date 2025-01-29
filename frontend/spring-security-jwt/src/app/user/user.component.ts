@@ -1,24 +1,76 @@
 import { Component, OnInit } from '@angular/core';
-import { Users } from '../models/users.model';
 import { AuthService } from '../authService/auth.service';
+import { UserService } from '../services/user.service';
+import { UserAuthService } from '../services/user-auth.service';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-user',
   standalone: true,
-  imports: [],
+  imports: [NgIf],
   templateUrl: './user.component.html',
-  styleUrl: './user.component.css'
+  styleUrl: './user.component.css',
 })
-export class UserComponent implements OnInit {
-  user:any;
+export class UserComponent {
+  message: string = '';
 
+  constructor(
+    private userService: UserService,
+    public authService: UserAuthService
+  ) {}
 
-  constructor(private authService: AuthService) {}
-  ngOnInit() {
-    // Subscribe to the user observable to retrieve user details
-    this.authService.getUser().subscribe((user) => {
-      this.user = user;
-    });
+  loading = false;
+  currentAction: 'admin' | 'user' | null = null;
+  messageType: 'success' | 'error' = 'success';
+
+  // Modified methods for AdminComponent
+  getAdminData() {
+    if (this.authService.hasRole('ADMIN')) {
+      this.loading = true;
+      this.currentAction = 'admin';
+
+      this.userService.getAdminData().subscribe({
+        next: (data) => {
+          this.message = data;
+          this.messageType = 'success';
+        },
+        error: (err) => {
+          this.message = err;
+          this.messageType = 'error';
+        },
+        complete: () => {
+          this.loading = false;
+          this.currentAction = null;
+        },
+      });
+    } else {
+      this.message = 'You need admin privileges to access this data';
+      this.messageType = 'error';
+    }
   }
 
+  getUserData() {
+    if (this.authService.hasRole('USER')) {
+      this.loading = true;
+      this.currentAction = 'user';
+
+      this.userService.getUserData().subscribe({
+        next: (data) => {
+          this.message = data;
+          this.messageType = 'success';
+        },
+        error: (err) => {
+          this.message = err;
+          this.messageType = 'error';
+        },
+        complete: () => {
+          this.loading = false;
+          this.currentAction = null;
+        },
+      });
+    } else {
+      this.message = 'You need user privileges to access this data';
+      this.messageType = 'error';
+    }
+  }
 }

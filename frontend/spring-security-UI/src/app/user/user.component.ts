@@ -17,7 +17,6 @@ export class UserComponent implements OnInit {
   ngOnInit() {
     // Subscribe to the user observable to retrieve user details
     this.authService.getUser().subscribe((user) => {
-      console.log(user);
       this.user = user;
     });
   }

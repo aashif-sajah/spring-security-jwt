@@ -6,15 +6,14 @@ import { Injectable } from '@angular/core';
 export class UserAuthService {
   constructor() {}
 
-  public setRole(roles: String []) {
+  public setRole(roles: String[]) {
     localStorage.setItem('roles', JSON.stringify(roles));
   }
 
-  public getRole(): { role: string, roleDescription: string }[] {
+  public getRole(): { role: string; roleDescription: string }[] {
     const roles = localStorage.getItem('roles');
     return roles ? JSON.parse(roles) : [];
-}
-
+  }
 
   public setToken(token: string) {
     localStorage.setItem('jwtToken', token);
@@ -32,5 +31,9 @@ export class UserAuthService {
     const token = this.getToken();
     const roles = this.getRole();
     return !!token && roles.length > 0;
+  }
+
+  public hasRole(role: string): boolean {
+    return this.getRole().some((r) => r.role === role);
   }
 }

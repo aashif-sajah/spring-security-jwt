@@ -23,12 +23,12 @@
         <li class="nav-item">
           <!-- <span class="navbar-text me-3">Welcome, <strong>{{ username }}</strong></span> -->
         </li>
-        <li>
+        <li *ngIf="!isAuthenticated()>
           <button class="btn btn-outline-success me-2">
             Login
           </button>
         </li>
-        <li>
+        <li *ngIf="isAuthenticated()>
           <button class="btn btn-outline-danger">
             Logout
           </button>
