@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-center align-items-center vh-100 bg-dark">
   <div class="card text-white bg-secondary p-4 shadow-lg custom-card">
     <h3 class="text-center mb-4">Login</h3>
-    <form (ngSubmit)="onSubmit(loginForm)" #loginForm="ngForm">
+   <!--
       <div class="mb-3">
         <label for="username" class="form-label">Username</label>
         <input
@@ -32,6 +32,57 @@
         </div>
       </div>
       <button type="submit" class="btn btn-primary w-100" [disabled]="loginForm.invalid">Login</button>
-    </form>
+    </form> -->
+    <!-- login.component.html -->
+<form (ngSubmit)="onSubmit(loginForm)" #loginForm="ngForm">
+  <!-- Username Input -->
+  <div class="mb-3">
+    <label for="username" class="form-label">Username</label>
+    <input
+      type="text"
+      id="username"
+      class="form-control bg-dark text-white"
+      [class.is-invalid]="usernameError"
+      placeholder="Enter your username"
+      [(ngModel)]="jwtRequest.userName"
+      name="userName"
+      #userName="ngModel"
+      required>
+    <div *ngIf="userName.invalid && userName.touched" class="text-danger">
+      User Name is required.
+    </div>
+    <div *ngIf="usernameError" class="text-danger mt-1">
+      Username not found
+    </div>
+  </div>
+
+  <!-- Password Input -->
+  <div class="mb-3">
+    <label for="password" class="form-label">Password</label>
+    <input
+      type="password"
+      id="password"
+      class="form-control bg-dark text-white"
+      [class.is-invalid]="passwordError"
+      placeholder="Enter your password"
+      [(ngModel)]="jwtRequest.userPassword"
+      name="userPassword"
+      #userPassword="ngModel"
+      required>
+    <div *ngIf="userPassword.invalid && userPassword.touched" class="text-danger">
+      Password is required.
+    </div>
+    <div *ngIf="passwordError" class="text-danger mt-1">
+      Invalid password
+    </div>
+  </div>
+
+  <!-- General Error Message -->
+  <div *ngIf="errorMessage" class="alert alert-danger mb-3">
+    {{ errorMessage }}
+  </div>
+
+  <button type="submit" class="btn btn-primary w-100" [disabled]="loginForm.invalid">Login</button>
+</form>
   </div>
 </div>
