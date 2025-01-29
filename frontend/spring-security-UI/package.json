@@ -19,7 +19,6 @@
     "@angular/platform-browser-dynamic": "^19.1.0",
     "@angular/router": "^19.1.0",
     "bootstrap": "^5.3.3",
-    "jquery": "^3.7.1",
     "rxjs": "~7.8.0",
     "spring-security-ui": "file:",
     "tslib": "^2.3.0",
