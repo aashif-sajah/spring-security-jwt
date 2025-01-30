@@ -13,7 +13,7 @@ public class CrossOriginConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**") // Allow all endpoints
-                        .allowedOrigins("http://localhost:4200") // Allow frontend
+                        .allowedOrigins("https://aashif-sajah.github.io") // Allow frontend
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Allowed HTTP methods
                         .allowedHeaders("*") // Allow all headers
                         .allowCredentials(true);
