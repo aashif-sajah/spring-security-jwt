@@ -1,96 +1,85 @@
-```markdown
-# Spring Security JWT Authentication API 🔐
+# Spring Security JWT API 🔐
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Java](https://img.shields.io/badge/Java-17-blue)](https://openjdk.org/projects/jdk/17/)
-[![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.2-green)](https://spring.io/projects/spring-boot)
+[![Java 17](https://img.shields.io/badge/Java-17-blue)](https://openjdk.org/projects/jdk/17/)
+[![Spring Boot 3](https://img.shields.io/badge/Spring_Boot-3.2-green)](https://spring.io/projects/spring-boot)
 
-A robust authentication and authorization system implementing JWT-based security with Spring Boot and Spring Security. Perfect for kickstarting secure web applications with role-based access control.
+A production-ready JWT authentication system with role-based access control, built with Spring Boot and Angular.
 
 ## Features ✨
-
-- **JWT Authentication**: Secure token-based authentication flow
-- **Role-Based Access Control**: Admin/User roles with granular permissions
-- **User Registration**: Secure endpoint for new user registration
-- **Password Encryption**: BCrypt password encoding
-- **CORS Configuration**: Pre-configured for frontend integration
-- **PostgreSQL Integration**: Ready for production databases
-- **API Documentation**: Clear endpoint specifications
-- **Error Handling**: Custom exception handling framework
+- ✅ JWT Authentication & Authorization
+- ✅ Role-Based Access Control (Admin/User)
+- ✅ Secure Password Storage with BCrypt
+- ✅ PostgreSQL Integration
+- ✅ CORS Configuration
+- ✅ Angular Frontend Demo
+- ✅ API Rate Limiting
+- ✅ Refresh Token Support
 
 ## Tech Stack 🛠️
-
-**Backend:**
+**Backend**
 - Java 17
 - Spring Boot 3.2
 - Spring Security
-- JJWT (JSON Web Tokens)
+- JJWT 0.12.5
 - PostgreSQL
 - Maven
 
-**Frontend (Example):**
+**Frontend**
 - Angular 19
-- RxJS
+- RxJS 7.8
 - Angular Material
 - JWT Interceptors
 
-## Getting Started 🚀
+## Installation 💻
 
-### Prerequisites
-
-- Java 17 JDK
-- Maven 3.6+
-- PostgreSQL 14+
-- Node.js 18+ (for frontend)
-- Angular CLI (for frontend)
-
-### Installation
-
-1. **Clone Repository**
+### 1. Clone Repository
 ```bash
 git clone https://github.com/yourusername/spring-security-jwt.git
 cd spring-security-jwt
 ```
 
-2. **Database Setup**
+### 2. Database Setup (PostgreSQL)
 ```sql
 CREATE DATABASE security_db;
-CREATE USER api_user WITH PASSWORD 'securepassword';
+CREATE USER api_user WITH PASSWORD 'your_strong_password';
 GRANT ALL PRIVILEGES ON DATABASE security_db TO api_user;
 ```
 
-3. **Backend Configuration**
+### 3. Configure Application
 ```properties
-# application.properties
+# src/main/resources/application.properties
 spring.datasource.url=jdbc:postgresql://localhost:5432/security_db
 spring.datasource.username=api_user
-spring.datasource.password=securepassword
-jwt.secret=your-512-bit-secure-secret-key
+spring.datasource.password=your_strong_password
+jwt.secret=your-512-bit-secret-key # Generate using: openssl rand -base64 512
 jwt.expiration=86400000 # 24 hours
 ```
 
-4. **Run Backend**
+### 4. Run Backend
 ```bash
 mvn spring-boot:run
 ```
 
-5. **Frontend Setup**
+### 5. Run Angular Frontend
 ```bash
 cd frontend
 npm install
-ng serve
+ng serve --open
 ```
 
 ## API Endpoints 🌐
 
-| Method | Endpoint            | Description                     | Required Role |
+| Method | Endpoint            | Description                     | Auth Required |
 |--------|---------------------|---------------------------------|---------------|
-| POST   | `/authenticate`     | Generate JWT token              | Public        |
-| POST   | `/registerNewUser`  | Register new user               | Admin         |
-| GET    | `/forAdmin`         | Admin-only resource             | ADMIN         |
-| GET    | `/forUser`          | User-specific resource          | USER          |
+| POST   | `/authenticate`     | Get JWT Token                   | Public        |
+| POST   | `/registerNewUser`  | Register new user               | Public         |
+| GET    | `/forAdmin`         | Admin-only endpoint             | ADMIN         |
+| GET    | `/forUser`          | User-specific endpoint          | USER          |
 
-**Sample Authentication Request:**
+## Usage Examples 📝
+
+### Authentication Request
 ```http
 POST /authenticate HTTP/1.1
 Content-Type: application/json
@@ -101,73 +90,84 @@ Content-Type: application/json
 }
 ```
 
-**Successful Response:**
+### Successful Response
 ```json
 {
   "jwtToken": "eyJhbGciOiJIUzUxMiJ9...",
   "user": {
     "userName": "admin",
-    "roles": ["ADMIN"]
+    "roles": ["ROLE_ADMIN"]
   }
 }
+```
+
+### Secure Request
+```http
+GET /forAdmin HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9...
 ```
 
 ## Security Implementation 🔒
 
 ### JWT Flow
-1. Client sends credentials to `/authenticate`
-2. Server validates credentials and returns JWT
-3. Client stores JWT (localStorage/sessionStorage)
-4. Subsequent requests include JWT in Authorization header
-5. Server validates JWT and grants access based on roles
+```mermaid
+sequenceDiagram
+    Client->>Server: POST /authenticate
+    Server->>Client: JWT Token
+    Client->>Server: Requests with JWT
+    Server->>Server: Validate Token & Roles
+    Server->>Client: Secure Data
+```
 
 ### Role Hierarchy
 ```java
 ADMIN > USER
 ```
 
-## Frontend Integration 💻
+## Frontend Integration 🖥️
 
-**Angular Auth Service:**
+**Angular Interceptor**
 ```typescript
-@Injectable({
-  providedIn: 'root'
-})
-export class AuthService {
-  private readonly baseUrl = 'http://localhost:8080';
-
-  constructor(private http: HttpClient) {}
-
-  login(credentials: JwtRequest): Observable<JwtResponse> {
-    return this.http.post<JwtResponse>(`${this.baseUrl}/authenticate`, credentials);
+@Injectable()
+export class AuthInterceptor implements HttpInterceptor {
+  intercept(req: HttpRequest<any>, next: HttpHandler) {
+    const token = localStorage.getItem('jwtToken');
+    
+    if (token) {
+      req = req.clone({
+        setHeaders: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+    }
+    return next.handle(req);
   }
+}
+```
 
-  getProtectedData(): Observable<string> {
-    return this.http.get(`${this.baseUrl}/forAdmin`, { responseType: 'text' });
+**Auth Guard**
+```typescript
+@Injectable({ providedIn: 'root' })
+export class AuthGuard implements CanActivate {
+  constructor(private authService: UserAuthService) {}
+
+  canActivate(route: ActivatedRouteSnapshot): boolean {
+    const requiredRoles = route.data['roles'];
+    return this.authService.hasRoles(requiredRoles);
   }
 }
 ```
 
 ## Contributing 🤝
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/awesome-feature`)
-3. Commit your changes (`git commit -m 'Add awesome feature'`)
-4. Push to the branch (`git push origin feature/awesome-feature`)
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-**Coding Standards:**
-- Follow Google Java Style Guide
-- Write comprehensive unit tests
-- Maintain API documentation
-- Keep commits atomic and well-described
-
 ## License 📄
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
 
-**Happy Coding!** 🚀 Built with ❤️ by Aashif Sajah
-```
-
+Made with ❤️ by [Aashif Sajah] - [@cliff.adventurer_](https://instagram.com/cliff.adventurer_)
