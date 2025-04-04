@@ -21,6 +21,7 @@ export class HeaderComponent {
     return this.authService.isAuthenticated();
   }
 
+  
   logout(): void {
     this.authService.clearRole();
     this.authService.setToken('');
